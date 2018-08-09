@@ -1,0 +1,548 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SIMS_Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="C__MigrationHistory">
+    <Key>
+      <PropertyRef Name="MigrationId" />
+      <PropertyRef Name="ContextKey" />
+    </Key>
+    <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+    <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AspNetUserClaim">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="USER" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_USERS_UserId" FromRole="AspNetUserClaims" ToRole="USERS" />
+  </EntityType>
+  <EntityType Name="AspNetUserLogin">
+    <Key>
+      <PropertyRef Name="LoginProvider" />
+      <PropertyRef Name="ProviderKey" />
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="USER" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_USERS_UserId" FromRole="AspNetUserLogins" ToRole="USERS" />
+  </EntityType>
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="CategoryID" />
+    </Key>
+    <Property Name="CategoryID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Category1" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Products" Relationship="Self.FK_dbo_Product_dbo_Category_CategoryID" FromRole="Category" ToRole="Product" />
+  </EntityType>
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="CustomerID" />
+    </Key>
+    <Property Name="CustomerID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerCode" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CustomerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Address1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Address2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Telephone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Sales" Relationship="Self.FK_dbo_Sales_dbo_Customers_CustomerID" FromRole="Customers" ToRole="Sales" />
+  </EntityType>
+  <EntityType Name="Email">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="NotifyUpload" Type="Boolean" Nullable="false" />
+    <Property Name="NotifyProcessed" Type="Boolean" Nullable="false" />
+    <Property Name="NotifySent" Type="Boolean" Nullable="false" />
+    <Property Name="EmailAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PERMISSION">
+    <Key>
+      <PropertyRef Name="PermissionId" />
+    </Key>
+    <Property Name="PermissionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PermissionDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="ROLES" Relationship="Self.LNK_ROLE_PERMISSION" FromRole="PERMISSIONS" ToRole="ROLES" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="ProductID" />
+    </Key>
+    <Property Name="ProductID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PartNo" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Brand" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="Model" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="Make" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="Made" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="Unit" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="Size" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Balance" Type="Int32" Nullable="false" />
+    <Property Name="Price1" Type="Double" Nullable="false" />
+    <Property Name="Price2" Type="Double" Nullable="false" />
+    <Property Name="CostPrice" Type="Double" Nullable="false" />
+    <Property Name="ReOrderLevel" Type="Int32" Nullable="false" />
+    <Property Name="CategoryID" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="Category" Relationship="Self.FK_dbo_Product_dbo_Category_CategoryID" FromRole="Product" ToRole="Category" />
+    <NavigationProperty Name="ProductLedgers" Relationship="Self.FK_dbo_ProductLedger_dbo_Product_ProductID" FromRole="Product" ToRole="ProductLedger" />
+    <NavigationProperty Name="PurchaseDetails" Relationship="Self.FK_dbo_PurchaseDetails_dbo_Product_ProductID" FromRole="Product" ToRole="PurchaseDetails" />
+    <NavigationProperty Name="SalesDetails" Relationship="Self.FK_dbo_SalesDetails_dbo_Product_ProductID" FromRole="Product" ToRole="SalesDetails" />
+    <NavigationProperty Name="SalesReturnDetails" Relationship="Self.FK_dbo_SalesReturnDetails_dbo_Product_ProductID" FromRole="Product" ToRole="SalesReturnDetails" />
+  </EntityType>
+  <EntityType Name="ProductLedger">
+    <Key>
+      <PropertyRef Name="ProductLedgerID" />
+    </Key>
+    <Property Name="ProductLedgerID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DatePosted" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="InvoiceNo" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Debit" Type="Int32" Nullable="false" />
+    <Property Name="Credit" Type="Int32" Nullable="false" />
+    <Property Name="Balance" Type="Int32" Nullable="false" />
+    <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ProductID" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="Product" Relationship="Self.FK_dbo_ProductLedger_dbo_Product_ProductID" FromRole="ProductLedger" ToRole="Product" />
+  </EntityType>
+  <EntityType Name="PurchaseDetail">
+    <Key>
+      <PropertyRef Name="PurchaseDetailsID" />
+    </Key>
+    <Property Name="PurchaseDetailsID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Qty" Type="Int32" Nullable="false" />
+    <Property Name="Price" Type="Double" Nullable="false" />
+    <Property Name="PurchaseID" Type="Int64" Nullable="false" />
+    <Property Name="ProductID" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="Product" Relationship="Self.FK_dbo_PurchaseDetails_dbo_Product_ProductID" FromRole="PurchaseDetails" ToRole="Product" />
+    <NavigationProperty Name="Purchase" Relationship="Self.FK_dbo_PurchaseDetails_dbo_Purchases_PurchaseID" FromRole="PurchaseDetails" ToRole="Purchases" />
+  </EntityType>
+  <EntityType Name="Purchase">
+    <Key>
+      <PropertyRef Name="PurchaseID" />
+    </Key>
+    <Property Name="PurchaseID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DatePosted" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="InvoiceNo" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Remarks" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Discount" Type="Double" Nullable="false" />
+    <Property Name="SupplierID" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="PurchaseDetails" Relationship="Self.FK_dbo_PurchaseDetails_dbo_Purchases_PurchaseID" FromRole="Purchases" ToRole="PurchaseDetails" />
+    <NavigationProperty Name="Supplier" Relationship="Self.FK_dbo_Purchases_dbo_Suppliers_SupplierID" FromRole="Purchases" ToRole="Suppliers" />
+  </EntityType>
+  <EntityType Name="ROLE">
+    <Key>
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LastModified" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsSysAdmin" Type="Boolean" Nullable="false" />
+    <Property Name="RoleDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="PERMISSIONS" Relationship="Self.LNK_ROLE_PERMISSION" FromRole="ROLES" ToRole="PERMISSIONS" />
+    <NavigationProperty Name="USERS" Relationship="Self.LNK_USER_ROLE" FromRole="ROLES" ToRole="USERS" />
+  </EntityType>
+  <EntityType Name="Sale">
+    <Key>
+      <PropertyRef Name="SalesID" />
+    </Key>
+    <Property Name="SalesID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DatePosted" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="InvoiceNo" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Remarks" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Discount" Type="Double" Nullable="false" />
+    <Property Name="CustomerID" Type="Int64" Nullable="false" />
+    <Property Name="SalesAgentID" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="Customer" Relationship="Self.FK_dbo_Sales_dbo_Customers_CustomerID" FromRole="Sales" ToRole="Customers" />
+    <NavigationProperty Name="SalesAgent" Relationship="Self.FK_dbo_Sales_dbo_SalesAgent_SalesAgentID" FromRole="Sales" ToRole="SalesAgent" />
+    <NavigationProperty Name="SalesDetails" Relationship="Self.FK_dbo_SalesDetails_dbo_Sales_SalesID" FromRole="Sales" ToRole="SalesDetails" />
+    <NavigationProperty Name="SalesReturns" Relationship="Self.FK_dbo_SalesReturn_dbo_Sales_SalesID" FromRole="Sales" ToRole="SalesReturn" />
+  </EntityType>
+  <EntityType Name="SalesAgent">
+    <Key>
+      <PropertyRef Name="SalesAgentID" />
+    </Key>
+    <Property Name="SalesAgentID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SalesAgentCode" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="LastName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="FirstName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Telephone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Sales" Relationship="Self.FK_dbo_Sales_dbo_SalesAgent_SalesAgentID" FromRole="SalesAgent" ToRole="Sales" />
+  </EntityType>
+  <EntityType Name="SalesDetail">
+    <Key>
+      <PropertyRef Name="SalesDetailsID" />
+    </Key>
+    <Property Name="SalesDetailsID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Qty" Type="Int32" Nullable="false" />
+    <Property Name="Price" Type="Double" Nullable="false" />
+    <Property Name="SalesID" Type="Int64" Nullable="false" />
+    <Property Name="ProductID" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="Product" Relationship="Self.FK_dbo_SalesDetails_dbo_Product_ProductID" FromRole="SalesDetails" ToRole="Product" />
+    <NavigationProperty Name="Sale" Relationship="Self.FK_dbo_SalesDetails_dbo_Sales_SalesID" FromRole="SalesDetails" ToRole="Sales" />
+  </EntityType>
+  <EntityType Name="SalesReturn">
+    <Key>
+      <PropertyRef Name="SalesReturnID" />
+    </Key>
+    <Property Name="SalesReturnID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DatePosted" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ReferenceNo" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Remarks" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SalesID" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="Sale" Relationship="Self.FK_dbo_SalesReturn_dbo_Sales_SalesID" FromRole="SalesReturn" ToRole="Sales" />
+    <NavigationProperty Name="SalesReturnDetails" Relationship="Self.FK_dbo_SalesReturnDetails_dbo_SalesReturn_SalesReturnID" FromRole="SalesReturn" ToRole="SalesReturnDetails" />
+  </EntityType>
+  <EntityType Name="SalesReturnDetail">
+    <Key>
+      <PropertyRef Name="SalesReturnDetailsID" />
+    </Key>
+    <Property Name="SalesReturnDetailsID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Qty" Type="Int32" Nullable="false" />
+    <Property Name="Price" Type="Double" Nullable="false" />
+    <Property Name="SalesReturnID" Type="Int64" Nullable="false" />
+    <Property Name="ProductID" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="Product" Relationship="Self.FK_dbo_SalesReturnDetails_dbo_Product_ProductID" FromRole="SalesReturnDetails" ToRole="Product" />
+    <NavigationProperty Name="SalesReturn" Relationship="Self.FK_dbo_SalesReturnDetails_dbo_SalesReturn_SalesReturnID" FromRole="SalesReturnDetails" ToRole="SalesReturn" />
+  </EntityType>
+  <EntityType Name="SiteSetting">
+    <Key>
+      <PropertyRef Name="SettingsID" />
+    </Key>
+    <Property Name="SettingsID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Code" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Supplier">
+    <Key>
+      <PropertyRef Name="SupplierID" />
+    </Key>
+    <Property Name="SupplierID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SupplierCode" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="SupplierName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ContactPerson" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Address1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Address2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Telephone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Purchases" Relationship="Self.FK_dbo_Purchases_dbo_Suppliers_SupplierID" FromRole="Suppliers" ToRole="Purchases" />
+  </EntityType>
+  <EntityType Name="USER">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LastModified" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Inactive" Type="Boolean" Nullable="false" />
+    <Property Name="Firstname" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Lastname" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+    <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+    <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_USERS_UserId" FromRole="USERS" ToRole="AspNetUserClaims" />
+    <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_USERS_UserId" FromRole="USERS" ToRole="AspNetUserLogins" />
+    <NavigationProperty Name="ROLES" Relationship="Self.LNK_USER_ROLE" FromRole="USERS" ToRole="ROLES" />
+  </EntityType>
+  <Association Name="FK_dbo_AspNetUserClaims_dbo_USERS_UserId">
+    <End Role="USERS" Type="Self.USER" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserClaims" Type="Self.AspNetUserClaim" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="AspNetUserClaims">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserLogins_dbo_USERS_UserId">
+    <End Role="USERS" Type="Self.USER" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserLogins" Type="Self.AspNetUserLogin" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="AspNetUserLogins">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_Product_dbo_Category_CategoryID">
+    <End Role="Category" Type="Self.Category" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Product" Type="Self.Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="CategoryID" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="CategoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_Sales_dbo_Customers_CustomerID">
+    <End Role="Customers" Type="Self.Customer" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Sales" Type="Self.Sale" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customers">
+        <PropertyRef Name="CustomerID" />
+      </Principal>
+      <Dependent Role="Sales">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_ProductLedger_dbo_Product_ProductID">
+    <End Role="Product" Type="Self.Product" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ProductLedger" Type="Self.ProductLedger" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="ProductLedger">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_PurchaseDetails_dbo_Product_ProductID">
+    <End Role="Product" Type="Self.Product" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="PurchaseDetails" Type="Self.PurchaseDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="PurchaseDetails">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_SalesDetails_dbo_Product_ProductID">
+    <End Role="Product" Type="Self.Product" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="SalesDetails" Type="Self.SalesDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="SalesDetails">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_SalesReturnDetails_dbo_Product_ProductID">
+    <End Role="Product" Type="Self.Product" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="SalesReturnDetails" Type="Self.SalesReturnDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="SalesReturnDetails">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_PurchaseDetails_dbo_Purchases_PurchaseID">
+    <End Role="Purchases" Type="Self.Purchase" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="PurchaseDetails" Type="Self.PurchaseDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Purchases">
+        <PropertyRef Name="PurchaseID" />
+      </Principal>
+      <Dependent Role="PurchaseDetails">
+        <PropertyRef Name="PurchaseID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_Purchases_dbo_Suppliers_SupplierID">
+    <End Role="Suppliers" Type="Self.Supplier" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Purchases" Type="Self.Purchase" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Suppliers">
+        <PropertyRef Name="SupplierID" />
+      </Principal>
+      <Dependent Role="Purchases">
+        <PropertyRef Name="SupplierID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_Sales_dbo_SalesAgent_SalesAgentID">
+    <End Role="SalesAgent" Type="Self.SalesAgent" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Sales" Type="Self.Sale" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SalesAgent">
+        <PropertyRef Name="SalesAgentID" />
+      </Principal>
+      <Dependent Role="Sales">
+        <PropertyRef Name="SalesAgentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_SalesDetails_dbo_Sales_SalesID">
+    <End Role="Sales" Type="Self.Sale" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="SalesDetails" Type="Self.SalesDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sales">
+        <PropertyRef Name="SalesID" />
+      </Principal>
+      <Dependent Role="SalesDetails">
+        <PropertyRef Name="SalesID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_SalesReturn_dbo_Sales_SalesID">
+    <End Role="Sales" Type="Self.Sale" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="SalesReturn" Type="Self.SalesReturn" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sales">
+        <PropertyRef Name="SalesID" />
+      </Principal>
+      <Dependent Role="SalesReturn">
+        <PropertyRef Name="SalesID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_SalesReturnDetails_dbo_SalesReturn_SalesReturnID">
+    <End Role="SalesReturn" Type="Self.SalesReturn" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="SalesReturnDetails" Type="Self.SalesReturnDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SalesReturn">
+        <PropertyRef Name="SalesReturnID" />
+      </Principal>
+      <Dependent Role="SalesReturnDetails">
+        <PropertyRef Name="SalesReturnID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="LNK_ROLE_PERMISSION">
+    <End Role="PERMISSIONS" Type="Self.PERMISSION" Multiplicity="*" />
+    <End Role="ROLES" Type="Self.ROLE" Multiplicity="*" />
+  </Association>
+  <Association Name="LNK_USER_ROLE">
+    <End Role="ROLES" Type="Self.ROLE" Multiplicity="*" />
+    <End Role="USERS" Type="Self.USER" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="SIMS_Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
+    <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
+    <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
+    <EntitySet Name="Categories" EntityType="Self.Category" />
+    <EntitySet Name="Customers" EntityType="Self.Customer" />
+    <EntitySet Name="Emails" EntityType="Self.Email" />
+    <EntitySet Name="PERMISSIONS" EntityType="Self.PERMISSION" />
+    <EntitySet Name="Products" EntityType="Self.Product" />
+    <EntitySet Name="ProductLedgers" EntityType="Self.ProductLedger" />
+    <EntitySet Name="PurchaseDetails" EntityType="Self.PurchaseDetail" />
+    <EntitySet Name="Purchases" EntityType="Self.Purchase" />
+    <EntitySet Name="ROLES" EntityType="Self.ROLE" />
+    <EntitySet Name="Sales" EntityType="Self.Sale" />
+    <EntitySet Name="SalesAgents" EntityType="Self.SalesAgent" />
+    <EntitySet Name="SalesDetails" EntityType="Self.SalesDetail" />
+    <EntitySet Name="SalesReturns" EntityType="Self.SalesReturn" />
+    <EntitySet Name="SalesReturnDetails" EntityType="Self.SalesReturnDetail" />
+    <EntitySet Name="SiteSettings" EntityType="Self.SiteSetting" />
+    <EntitySet Name="Suppliers" EntityType="Self.Supplier" />
+    <EntitySet Name="USERS" EntityType="Self.USER" />
+    <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_USERS_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_USERS_UserId">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_USERS_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_USERS_UserId">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_Product_dbo_Category_CategoryID" Association="Self.FK_dbo_Product_dbo_Category_CategoryID">
+      <End Role="Category" EntitySet="Categories" />
+      <End Role="Product" EntitySet="Products" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_Sales_dbo_Customers_CustomerID" Association="Self.FK_dbo_Sales_dbo_Customers_CustomerID">
+      <End Role="Customers" EntitySet="Customers" />
+      <End Role="Sales" EntitySet="Sales" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_ProductLedger_dbo_Product_ProductID" Association="Self.FK_dbo_ProductLedger_dbo_Product_ProductID">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="ProductLedger" EntitySet="ProductLedgers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_PurchaseDetails_dbo_Product_ProductID" Association="Self.FK_dbo_PurchaseDetails_dbo_Product_ProductID">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="PurchaseDetails" EntitySet="PurchaseDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_SalesDetails_dbo_Product_ProductID" Association="Self.FK_dbo_SalesDetails_dbo_Product_ProductID">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="SalesDetails" EntitySet="SalesDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_SalesReturnDetails_dbo_Product_ProductID" Association="Self.FK_dbo_SalesReturnDetails_dbo_Product_ProductID">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="SalesReturnDetails" EntitySet="SalesReturnDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_PurchaseDetails_dbo_Purchases_PurchaseID" Association="Self.FK_dbo_PurchaseDetails_dbo_Purchases_PurchaseID">
+      <End Role="Purchases" EntitySet="Purchases" />
+      <End Role="PurchaseDetails" EntitySet="PurchaseDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_Purchases_dbo_Suppliers_SupplierID" Association="Self.FK_dbo_Purchases_dbo_Suppliers_SupplierID">
+      <End Role="Suppliers" EntitySet="Suppliers" />
+      <End Role="Purchases" EntitySet="Purchases" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_Sales_dbo_SalesAgent_SalesAgentID" Association="Self.FK_dbo_Sales_dbo_SalesAgent_SalesAgentID">
+      <End Role="SalesAgent" EntitySet="SalesAgents" />
+      <End Role="Sales" EntitySet="Sales" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_SalesDetails_dbo_Sales_SalesID" Association="Self.FK_dbo_SalesDetails_dbo_Sales_SalesID">
+      <End Role="Sales" EntitySet="Sales" />
+      <End Role="SalesDetails" EntitySet="SalesDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_SalesReturn_dbo_Sales_SalesID" Association="Self.FK_dbo_SalesReturn_dbo_Sales_SalesID">
+      <End Role="Sales" EntitySet="Sales" />
+      <End Role="SalesReturn" EntitySet="SalesReturns" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_SalesReturnDetails_dbo_SalesReturn_SalesReturnID" Association="Self.FK_dbo_SalesReturnDetails_dbo_SalesReturn_SalesReturnID">
+      <End Role="SalesReturn" EntitySet="SalesReturns" />
+      <End Role="SalesReturnDetails" EntitySet="SalesReturnDetails" />
+    </AssociationSet>
+    <AssociationSet Name="LNK_ROLE_PERMISSION" Association="Self.LNK_ROLE_PERMISSION">
+      <End Role="PERMISSIONS" EntitySet="PERMISSIONS" />
+      <End Role="ROLES" EntitySet="ROLES" />
+    </AssociationSet>
+    <AssociationSet Name="LNK_USER_ROLE" Association="Self.LNK_USER_ROLE">
+      <End Role="ROLES" EntitySet="ROLES" />
+      <End Role="USERS" EntitySet="USERS" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
